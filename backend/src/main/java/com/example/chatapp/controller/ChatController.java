@@ -30,7 +30,7 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
 
-            if (userService.userExists(chatMessage.getSender()){
+            if (userService.userExists(chatMessage.getSender())){
                 headerAccessor.getSessionAttributes().put("username",chatMessage.getSender());
                 userService.setUserOnlineStatus(chatMessage.getSender(),true);
 
@@ -49,7 +49,7 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage){
-        if (userService.userExists(chatMessage.getSender()){
+        if (userService.userExists(chatMessage.getSender())){
             if(chatMessage.getTimeStemp() == null){
                 chatMessage.setTimeStemp(LocalDateTime.now());
             }
