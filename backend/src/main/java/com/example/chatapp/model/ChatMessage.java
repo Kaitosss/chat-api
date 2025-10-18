@@ -23,13 +23,13 @@ public class ChatMessage {
     private String color;
 
     @Column(nullable = false)
-    private LocalDateTime timeStemp;
+    private LocalDateTime timeStamp;
 
     @Enumerated(EnumType.STRING)
     private MessageType type;
 
     public enum MessageType {
-        CHAT ,PRIVATEMESSAGE ,JOIN ,LEAVE ,TYPING
+        CHAT ,PRIVATE_MESSAGE ,JOIN ,LEAVE ,TYPING
     }
 
 }

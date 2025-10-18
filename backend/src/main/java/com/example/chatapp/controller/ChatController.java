@@ -36,7 +36,7 @@ public class ChatController {
 
                 System.out.println("User added Successfully" + chatMessage.getSender() + "with session ID" +
                         headerAccessor.getSessionId());
-                chatMessage.setTimeStemp(LocalDateTime.now());
+                chatMessage.setTimeStamp(LocalDateTime.now());
                 if (chatMessage.getContent() == null){
                     chatMessage.setContent("");
                 }
@@ -50,8 +50,8 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage){
         if (userService.userExists(chatMessage.getSender())){
-            if(chatMessage.getTimeStemp() == null){
-                chatMessage.setTimeStemp(LocalDateTime.now());
+            if(chatMessage.getTimeStamp() == null){
+                chatMessage.setTimeStamp(LocalDateTime.now());
             }
 
             if (chatMessage.getContent() == null){
@@ -67,13 +67,15 @@ public class ChatController {
     @MessageMapping("/chat.sendPrivateMessage")
     public void sendPrivateMessage(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
         if (userService.userExists(chatMessage.getSender()) && userService.userExists(chatMessage.getRecepient())){
-            if(chatMessage.getTimeStemp() == null){
-                chatMessage.setTimeStemp(LocalDateTime.now());
+            if(chatMessage.getTimeStamp() == null){
+                chatMessage.setTimeStamp(LocalDateTime.now());
             }
 
             if (chatMessage.getContent() == null){
                 chatMessage.setContent("");
             }
+
+            chatMessage.setType(ChatMessage.MessageType.PRIVATE_MESSAGE);
 
             ChatMessage saveMessage = chatMessageRepository.save(chatMessage);
             System.out.println("Message saved successfully with id" + saveMessage.getId());
