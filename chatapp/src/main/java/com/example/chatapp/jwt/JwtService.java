@@ -68,7 +68,7 @@ public class JwtService {
 
         final Long userId = user.getId();
 
-        return (userIdfromToken != null && userIdfromToken.equals(userId) && !isTokekExpired());
+        return (userIdfromToken != null && userIdfromToken.equals(userId) && !isTokekExpired(jwtToken));
     }
 
     private boolean isTokekExpired(String jwtToken){
